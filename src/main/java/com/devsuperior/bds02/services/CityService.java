@@ -21,6 +21,7 @@ public class CityService {
 	@Autowired
 	private CityRepository repository;
 
+	@Transactional(readOnly=true)
 	public List<CityDTO> findAll() {
 		List<City> list= repository.findAll(Sort.by("name").ascending());
 		return list.stream().map(x-> new CityDTO(x)).toList();
@@ -33,7 +34,7 @@ public class CityService {
 		entity = repository.save(entity);
 		return new CityDTO(entity);
 	}
-
+	
 	public void delete(Long id) {		
 		try {
 			repository.deleteById(id);
